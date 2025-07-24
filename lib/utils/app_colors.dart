@@ -52,4 +52,8 @@ class AppColors {
   static const Color white = Color(0xFFFFFFFF);
   static const Color black = Color(0xFF000000);
   static const Color transparent = Colors.transparent;
+
+
+  static const Color primaryBlue = Color(0xFF4FC3D7);      // Top blue
+  static const Color primaryTeal = Color(0xFF80D8C3);      // Middle teal
 }

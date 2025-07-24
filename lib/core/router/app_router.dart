@@ -1,14 +1,13 @@
 import 'package:go_router/go_router.dart';
-import '../../features/home/screens/home_screen.dart';
+import '../../screens/home_screen.dart';
 
-import '../../features/dashboard/screens/dashboard_screen.dart';
-import '../../features/auth/screens/user_type_selection_screen.dart';
-import '../../features/auth/screens/user_login_screen.dart';
-import '../../features/auth/screens/user_registration_screen.dart';
-import '../../features/auth/screens/salon_login_screen.dart';
-import '../../features/auth/screens/salon_registration_screen.dart';
-import '../../features/auth/screens/seller_login_screen.dart';
-import '../../features/auth/screens/seller_registration_screen.dart';
+import '../../screens/auth/auth_wrapper.dart';
+import '../../screens/auth/user_type_selection_screen.dart';
+import '../../screens/auth/login_screen.dart';
+import '../../screens/auth/register_screen.dart';
+import '../../screens/auth/forgot_password_screen.dart';
+import '../../screens/auth/onboarding_screen.dart';
+import '../../models/user.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
@@ -17,47 +16,75 @@ class AppRouter {
       // Authentication Routes
       GoRoute(
         path: '/auth',
+        builder: (context, state) => const AuthWrapper(),
+      ),
+
+      // Onboarding
+      GoRoute(
+        path: '/onboarding',
+        builder: (context, state) => OnboardingScreen(
+          onCompleted: () {
+            // Handle onboarding completion
+          },
+        ),
+      ),
+
+      // User Type Selection
+      GoRoute(
+        path: '/auth/user-type',
         builder: (context, state) => const UserTypeSelectionScreen(),
       ),
 
-      // User Authentication
+      // Login
       GoRoute(
-        path: '/auth/user/login',
-        builder: (context, state) => const UserLoginScreen(),
-      ),
-      GoRoute(
-        path: '/auth/user/register',
-        builder: (context, state) => const UserRegistrationScreen(),
-      ),
-
-      // Salon Authentication
-      GoRoute(
-        path: '/auth/salon/login',
-        builder: (context, state) => const SalonLoginScreen(),
-      ),
-      GoRoute(
-        path: '/auth/salon/register',
-        builder: (context, state) => const SalonRegistrationScreen(),
+        path: '/auth/login',
+        builder: (context, state) => LoginScreen(
+          onLoginSuccess: () {
+            // Handle login success - navigate to main app
+          },
+        ),
       ),
 
-      // Seller Authentication
+      // Register with user type parameter
       GoRoute(
-        path: '/auth/seller/login',
-        builder: (context, state) => const SellerLoginScreen(),
+        path: '/auth/register/:userType',
+        builder: (context, state) {
+          final userTypeString = state.pathParameters['userType']!;
+          UserType userType;
+
+          switch (userTypeString) {
+            case 'customer':
+              userType = UserType.customer;
+              break;
+            case 'salon':
+              userType = UserType.salon;
+              break;
+            case 'seller':
+              userType = UserType.seller;
+              break;
+            default:
+              userType = UserType.customer;
+          }
+
+          return RegisterScreen(
+            userType: userType,
+            onRegisterSuccess: () {
+              // Handle registration success
+            },
+          );
+        },
       ),
+
+      // Forgot Password
       GoRoute(
-        path: '/auth/seller/register',
-        builder: (context, state) => const SellerRegistrationScreen(),
+        path: '/auth/forgot-password',
+        builder: (context, state) => const ForgotPasswordScreen(),
       ),
 
       // Main App Routes
       GoRoute(
         path: '/',
         builder: (context, state) => const HomeScreen(),
-      ),
-      GoRoute(
-        path: '/dashboard',
-        builder: (context, state) => const DashboardScreen(),
       ),
 
     ],
