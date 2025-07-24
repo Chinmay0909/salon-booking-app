@@ -87,7 +87,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             const ExploreScreen(),
             const ProductsScreen(),
             const BookingsScreen(),
-            const MessagesScreen(),
+
             const AccountScreen(),
           ],
           'items': const [
@@ -111,11 +111,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               activeIcon: Icon(Icons.calendar_today),
               label: 'Bookings',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.chat_bubble_outline),
-              activeIcon: Icon(Icons.chat_bubble),
-              label: 'Messages',
-            ),
+
             BottomNavigationBarItem(
               icon: Icon(Icons.person_outline),
               activeIcon: Icon(Icons.person),
@@ -130,7 +126,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             const SalonDashboardScreen(),
             const SalonBookingsScreen(),
             const SalonServicesScreen(),
-            const MessagesScreen(),
+
             const AccountScreen(),
           ],
           'items': const [
@@ -149,11 +145,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               activeIcon: Icon(Icons.content_cut),
               label: 'Services',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.chat_bubble_outline),
-              activeIcon: Icon(Icons.chat_bubble),
-              label: 'Messages',
-            ),
+
             BottomNavigationBarItem(
               icon: Icon(Icons.person_outline),
               activeIcon: Icon(Icons.person),
@@ -168,7 +160,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             const SellerDashboardScreen(),
             const SellerProductsScreen(),
             const SellerOrdersScreen(),
-            const MessagesScreen(),
+
             const AccountScreen(),
           ],
           'items': const [
@@ -187,11 +179,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               activeIcon: Icon(Icons.shopping_cart),
               label: 'Orders',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.chat_bubble_outline),
-              activeIcon: Icon(Icons.chat_bubble),
-              label: 'Messages',
-            ),
+
             BottomNavigationBarItem(
               icon: Icon(Icons.person_outline),
               activeIcon: Icon(Icons.person),
