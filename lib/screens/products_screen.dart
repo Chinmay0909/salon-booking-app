@@ -3,9 +3,17 @@ import '../utils/app_colors.dart';
 import '../widgets/products/featured_products.dart';
 import '../widgets/products/product_categories.dart';
 import '../widgets/products/all_products_section.dart';
+import '../widgets/products/medicine_products_section.dart';
 
-class ProductsScreen extends StatelessWidget {
+class ProductsScreen extends StatefulWidget {
   const ProductsScreen({super.key});
+
+  @override
+  State<ProductsScreen> createState() => _ProductsScreenState();
+}
+
+class _ProductsScreenState extends State<ProductsScreen> {
+  String selectedTab = 'All'; // All, Beauty, Medicine
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +27,21 @@ class ProductsScreen extends StatelessWidget {
               _buildHeader(),
               const SizedBox(height: 20),
               _buildSearchBar(),
-              const SizedBox(height: 24),
-              const FeaturedProducts(),
-              const SizedBox(height: 32),
-              const ProductCategories(),
-              const SizedBox(height: 32),
-              const AllProductsSection(),
               const SizedBox(height: 20),
+              _buildTabSelector(),
+              const SizedBox(height: 24),
+              if (selectedTab == 'All' || selectedTab == 'Beauty') ...[
+                const FeaturedProducts(),
+                const SizedBox(height: 32),
+                const ProductCategories(),
+                const SizedBox(height: 32),
+                const AllProductsSection(),
+                const SizedBox(height: 32),
+              ],
+              if (selectedTab == 'All' || selectedTab == 'Medicine') ...[
+                const MedicineProductsSection(),
+                const SizedBox(height: 20),
+              ],
             ],
           ),
         ),
@@ -43,7 +59,11 @@ class ProductsScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Beauty Products',
+                  selectedTab == 'Medicine'
+                      ? 'Health & Medicine'
+                      : selectedTab == 'Beauty'
+                      ? 'Beauty Products'
+                      : 'Health & Beauty Store',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -52,7 +72,11 @@ class ProductsScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Find the best products for you',
+                  selectedTab == 'Medicine'
+                      ? 'Your trusted pharmacy partner'
+                      : selectedTab == 'Beauty'
+                      ? 'Find the best products for you'
+                      : 'Beauty products & medicines delivered',
                   style: TextStyle(
                     fontSize: 14,
                     color: AppColors.textSecondary,
@@ -114,7 +138,11 @@ class ProductsScreen extends StatelessWidget {
                   fontSize: 16,
                 ),
                 decoration: InputDecoration(
-                  hintText: 'Search products...',
+                  hintText: selectedTab == 'Medicine'
+                      ? 'Search medicines...'
+                      : selectedTab == 'Beauty'
+                      ? 'Search beauty products...'
+                      : 'Search products...',
                   hintStyle: TextStyle(
                     color: AppColors.textSecondary,
                     fontSize: 16,
@@ -139,6 +167,56 @@ class ProductsScreen extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTabSelector() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        children: [
+          _buildTabButton('All', Icons.apps),
+          const SizedBox(width: 12),
+          _buildTabButton('Beauty', Icons.face_retouching_natural),
+          const SizedBox(width: 12),
+          _buildTabButton('Medicine', Icons.local_pharmacy),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTabButton(String title, IconData icon) {
+    final isSelected = selectedTab == title;
+    return Expanded(
+      child: GestureDetector(
+        onTap: () => setState(() => selectedTab = title),
+        child: Container(
+          height: 48,
+          decoration: BoxDecoration(
+            color: isSelected ? AppColors.primary : AppColors.surface,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                icon,
+                color: isSelected ? Colors.white : AppColors.textPrimary,
+                size: 18,
+              ),
+              const SizedBox(width: 6),
+              Text(
+                title,
+                style: TextStyle(
+                  color: isSelected ? Colors.white : AppColors.textPrimary,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
